@@ -70,8 +70,8 @@ Par_fix = [0; 0; 0; 0.00383; 59.2085; 70.5565; 0.500; 2.160; 1.100; 0.02445;...
     0.05263; 1.0];
 
 % Definition of the observer for each simulated scenarios
-n_scen = 8*6; % Number of different scenarios
-n_sim_scen = 50; % Number of simulations for each scenario
+n_scen = 8*7; % Number of different scenarios
+n_sim_scen = 1; % Number of simulations for each scenario
 n_sim = 1+n_sim_scen*n_scen; % Total number of simulations
 % OBS: First simulation is discarded to compensate the just-in-time compiler
 
@@ -84,7 +84,8 @@ flag_est(8*n_sim_scen+2:16*n_sim_scen+1) = 2; % CUKF&S
 flag_est(16*n_sim_scen+2:24*n_sim_scen+1) = 3; % CCKF&S
 flag_est(24*n_sim_scen+2:32*n_sim_scen+1) = 4; % PF&S
 flag_est(32*n_sim_scen+2:40*n_sim_scen+1) = 5; % CEnKF&S
-for i = [1:3,6]
+flag_est(48*n_sim_scen+2:56*n_sim_scen+1) = 6; % CEnKF&S
+for i = [1:3, 6, 7]
     N_smo(((i-1)*8+0)*n_sim_scen+2:((i-1)*8+1)*n_sim_scen+1) = 0;
     N_smo(((i-1)*8+1)*n_sim_scen+2:((i-1)*8+2)*n_sim_scen+1) = 1;
     N_smo(((i-1)*8+2)*n_sim_scen+2:((i-1)*8+3)*n_sim_scen+1) = 2;
@@ -300,7 +301,7 @@ for flag_ode = 1:3
     end
 
     % Simulation
-    for i = 1:n_sim
+    for i = 53:n_sim
         [Results{flag_ode}.X_sim(1:nest, 1:N_k,i), Results{flag_ode}.Y_sim(1:ny, 1:N_k,i),...
             Results{flag_ode}.Pxx_sim(1:nest, 1:nest, 1:N_k,i), Results{flag_ode}.X_vector(1:nest, 1:N_k,i),...
             Results{flag_ode}.Pxx_vector(1:nest, 1:nest, 1:N_k,i), Results{flag_ode}.Esf_vector(1,1:N_k,i)] =...
